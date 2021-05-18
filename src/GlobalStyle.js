@@ -6,9 +6,12 @@ const GlobalStyle = createGlobalStyle`
 }
 body {
     font-family: ${(props) => props.theme.fontFamily};
-    margin: 0px 18px;
+    color: ${(props) => props.theme.textColor};
     background-color: ${(props) => props.theme.bgColor};
     transition: .5s;
+}
+a {
+    color: ${(props) => props.theme.lightAccentColor};
 }
 `;
 
