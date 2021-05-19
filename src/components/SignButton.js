@@ -12,6 +12,9 @@ const SignButton = styled.button`
     text-align: center;
     border: none;
     width: 100%;
+    &:disabled {
+        opacity: 0.7;
+    }
 `;
 
 export default SignButton;

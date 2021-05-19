@@ -10,7 +10,6 @@ const Input = styled.input`
     font-size: 20px;
     line-height: 25px;
     padding: 0px 11px;
-
     &::placeholder {
         color: ${(props) => props.theme.inputPlaceholderColor};
         opacity: 1;
