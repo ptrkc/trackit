@@ -10,7 +10,7 @@ export default function SingIn() {
             <Input type="text" placeholder="email" />
             <Input type="password" placeholder="senha" />
             <SingButton>Entrar</SingButton>
-            <Link to="/cadstro">Não tem uma conta? Cadastre-se!</Link>
+            <Link to="/cadastro">Não tem uma conta? Cadastre-se!</Link>
         </SingInStyle>
     );
 }
@@ -18,7 +18,7 @@ const SingInStyle = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin: 0px 36px 0px 36px;
+    margin: 0px 36px 40px 36px;
     svg {
         margin: 68px 0px 32px 0px;
         width: 180px;
@@ -29,7 +29,7 @@ const SingInStyle = styled.div`
     button {
         margin-bottom: 25px;
     }
-    Link {
+    a {
         font-size: 14px;
     }
 `;

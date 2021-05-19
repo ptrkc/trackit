@@ -8,7 +8,6 @@ body {
     font-family: ${(props) => props.theme.fontFamily};
     color: ${(props) => props.theme.textColor};
     background-color: ${(props) => props.theme.bgColor};
-    transition: .5s;
 }
 a {
     color: ${(props) => props.theme.lightAccentColor};
