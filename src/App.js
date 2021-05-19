@@ -4,8 +4,8 @@ import GlobalStyle from "./GlobalStyle";
 import { ThemeProvider } from "styled-components";
 import { defaultTheme } from "./Themes";
 import Header from "./Header/Header";
-import SingIn from "./SingIn/SingIn";
-import SingUp from "./SingUp/SingUp";
+import SignIn from "./SignIn/SignIn";
+import SignUp from "./SignUp/SignUp";
 import Today from "./Today/Today";
 import Habits from "./Habits/Habits";
 import History from "./History/History";
@@ -20,10 +20,10 @@ export default function App() {
                 <Header />
                 <Switch>
                     <Route path="/" exact>
-                        <SingIn />
+                        <SignIn />
                     </Route>
                     <Route path="/cadastro" exact>
-                        <SingUp />
+                        <SignUp />
                     </Route>
                     <Route path="/hoje" exact>
                         <Today />

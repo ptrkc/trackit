@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-const Input = styled.button`
+const SignButton = styled.button`
     border-radius: 5px;
     height: 45px;
     margin-bottom: 6px;
@@ -14,4 +14,4 @@ const Input = styled.button`
     width: 100%;
 `;
 
-export default Input;
+export default SignButton;
