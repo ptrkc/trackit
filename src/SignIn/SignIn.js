@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { Link, useHistory } from "react-router-dom";
 import styled from "styled-components";
 import { ReactComponent as FullLogo } from "./../assets/full-logo.svg";
@@ -7,12 +7,15 @@ import SignButton from "./../components/SignButton.js";
 import axios from "axios";
 import Loader from "react-loader-spinner";
 import { isEmail } from "./../components/ValidateInputs";
+import UserContext from "../contexts/UserContext";
 
 export default function SignIn() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [disabled, setDisabled] = useState(false);
     const history = useHistory();
+
+    const { setUser } = useContext(UserContext);
 
     function signIn(body) {
         setDisabled(true);
@@ -21,12 +24,11 @@ export default function SignIn() {
             body
         );
         signInRequest.then((response) => {
-            console.log(response.data);
+            setUser(response.data);
             setDisabled(false);
             history.push("/hoje");
         });
         signInRequest.catch((error) => {
-            console.log(error.response.data);
             if (error.response.status === 401) {
                 alert(error.response.data.message);
             } else {
