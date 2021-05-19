@@ -7,7 +7,10 @@ const GlobalStyle = createGlobalStyle`
 body {
     font-family: ${(props) => props.theme.fontFamily};
     color: ${(props) => props.theme.textColor};
-    background-color: ${(props) => props.theme.bgColor};
+    background-color: ${(props) =>
+        props.user === ""
+            ? props.theme.cardBgColor
+            : props.theme.signedInBgColor};
 }
 a {
     color: ${(props) => props.theme.lightAccentColor};

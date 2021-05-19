@@ -3,23 +3,30 @@ import styled from "styled-components";
 import UserContext from "../contexts/UserContext";
 import { ReactComponent as Logo } from "./../assets/logo.svg";
 
-export default function Header({ path }) {
+export default function Header() {
     const { user } = useContext(UserContext);
     console.log(user);
     if (user !== "") {
         return (
-            <StyledHeader>
-                <div>
-                    <Logo className="logo" />
-                    <img src={user.image} alt={user.name} />
-                </div>
-            </StyledHeader>
+            <>
+                <WhiteSpace />
+                <FixedHeader>
+                    <div>
+                        <Logo className="logo" />
+                        <img src={user.image} alt={user.name} />
+                    </div>
+                </FixedHeader>
+            </>
         );
     }
     return "";
 }
 
-const StyledHeader = styled.div`
+const WhiteSpace = styled.div`
+    height: 92px;
+`;
+
+const FixedHeader = styled.div`
     position: fixed;
     display: flex;
     align-items: center;

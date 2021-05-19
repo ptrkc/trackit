@@ -21,7 +21,7 @@ export default function App() {
             <ThemeProvider theme={defaultTheme}>
                 <BrowserRouter>
                     <ResetCSS />
-                    <GlobalStyle />
+                    <GlobalStyle user={user} />
                     <Header />
                     <Switch>
                         <Route path="/" exact>
