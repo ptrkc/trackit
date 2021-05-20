@@ -6,7 +6,7 @@ import { ReactComponent as Trash } from "./../assets/trash.svg";
 import { useContext } from "react";
 import UserContext from "../contexts/UserContext";
 
-export default function HabitCard({ habit }) {
+export default function HabitCard({ habit, getHabits }) {
     const { id, name, days } = habit;
     const { user } = useContext(UserContext);
 
@@ -26,7 +26,7 @@ export default function HabitCard({ habit }) {
             `https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${id}`,
             config
         );
-        deleteRequest.then((response) => console.log(response));
+        deleteRequest.then(getHabits);
         deleteRequest.catch((error) => console.log(error));
     }
     return (

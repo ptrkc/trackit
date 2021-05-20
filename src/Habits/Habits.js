@@ -44,7 +44,7 @@ export default function Habits() {
                 ""
             )}
             {habits.map((habit) => {
-                return <HabitCard habit={habit} />;
+                return <HabitCard habit={habit} getHabits={getHabits} />;
             })}
             <p className="no-habits">
                 Você não tem nenhum hábito cadastrado ainda. Adicione um hábito
