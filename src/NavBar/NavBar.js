@@ -4,11 +4,12 @@ import UserContext from "../contexts/UserContext";
 import { CircularProgressbarWithChildren } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
 import { useHistory } from "react-router";
+import TodayContext from "../contexts/TodayContext";
 
 export default function NavBar() {
     const { user } = useContext(UserContext);
     const history = useHistory();
-    const percentage = 66;
+    const { percentage } = useContext(TodayContext);
 
     if (user !== "") {
         return (
@@ -58,7 +59,7 @@ const FixedNavBar = styled.div`
 
     div {
         width: 91px;
-        margin-bottom: 25px;
+        margin-bottom: 45px;
         span {
             color: ${(props) => props.theme.cardBgColor};
         }
