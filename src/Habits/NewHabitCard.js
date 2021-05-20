@@ -3,6 +3,8 @@ import { useContext, useState } from "react";
 import styled from "styled-components";
 import UserContext from "../contexts/UserContext";
 import Input from "./../components/Input";
+import DaysSelector from "./DaysSelector";
+
 export default function NewHabitCard({ setShowNewHabitCard }) {
     const { user } = useContext(UserContext);
     console.log(user);
@@ -48,17 +50,7 @@ export default function NewHabitCard({ setShowNewHabitCard }) {
                 disabled={disabled}
             />
             <div className="days-list">
-                {days.map((d, i) => {
-                    return (
-                        <DaysButton
-                            key={i}
-                            onClick={() => toggleDay(i)}
-                            selected={selectedDays.includes(i) ? true : false}
-                        >
-                            {d}
-                        </DaysButton>
-                    );
-                })}
+                <DaysSelector states={{ selectedDays, setSelectedDays }} />
             </div>
             <div className="buttons">
                 <button

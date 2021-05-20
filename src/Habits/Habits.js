@@ -1,13 +1,32 @@
 import axios from "axios";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import styled from "styled-components";
 import UserContext from "../contexts/UserContext";
 import NewHabitCard from "./NewHabitCard";
+import DaysSelector from "./DaysSelector";
+
 export default function Habits() {
     const [showNewHabitCard, setShowNewHabitCard] = useState(false);
     const { user } = useContext(UserContext);
     console.log(user);
 
+    useEffect(() => {
+        getHabits();
+    }, []);
+
+    function getHabits() {
+        const config = {
+            headers: {
+                Authorization: `Bearer ${user.token}`,
+            },
+        };
+        const newHabitRequest = axios.get(
+            "https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits",
+            config
+        );
+        newHabitRequest.then((response) => console.log(response.data));
+        newHabitRequest.catch((error) => console.log(error.response.data));
+    }
     return (
         <StyledDiv>
             <div className="my-habits">
