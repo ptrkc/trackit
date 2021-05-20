@@ -5,7 +5,7 @@ import UserContext from "../contexts/UserContext";
 import Input from "./../components/Input";
 import DaysSelector from "./DaysSelector";
 
-export default function NewHabitCard({ setShowNewHabitCard }) {
+export default function NewHabitCard({ setShowNewHabitCard, getHabits }) {
     const { user } = useContext(UserContext);
     console.log(user);
     const [disabled, setDisabled] = useState(false);
@@ -37,7 +37,10 @@ export default function NewHabitCard({ setShowNewHabitCard }) {
             body,
             config
         );
-        newHabitRequest.then((response) => console.log(response.data));
+        newHabitRequest.then(() => {
+            getHabits();
+            setShowNewHabitCard(false);
+        });
         newHabitRequest.catch((error) => console.log(error.response.data));
     }
     return (

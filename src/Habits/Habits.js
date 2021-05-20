@@ -39,17 +39,24 @@ export default function Habits() {
                 <button onClick={() => setShowNewHabitCard(true)}>+</button>
             </div>
             {showNewHabitCard ? (
-                <NewHabitCard setShowNewHabitCard={setShowNewHabitCard} />
+                <NewHabitCard
+                    setShowNewHabitCard={setShowNewHabitCard}
+                    getHabits={getHabits}
+                />
             ) : (
                 ""
             )}
             {habits.map((habit) => {
                 return <HabitCard habit={habit} getHabits={getHabits} />;
             })}
-            <p className="no-habits">
-                Você não tem nenhum hábito cadastrado ainda. Adicione um hábito
-                para começar a trackear!
-            </p>
+            {!habits.length ? (
+                <p className="no-habits">
+                    Você não tem nenhum hábito cadastrado ainda. Adicione um
+                    hábito para começar a trackear!
+                </p>
+            ) : (
+                ""
+            )}
         </StyledDiv>
     );
 }
@@ -60,9 +67,6 @@ const StyledDiv = styled.div`
     padding: 0px 18px;
     font-size: 18px;
     line-height: 22px;
-    /* background: ${(props) => props.theme.cardBgColor};
-    color: ${(props) => props.theme.lightAccentColor}; */
-
     .my-habits {
         display: flex;
         align-items: center;
@@ -83,25 +87,7 @@ const StyledDiv = styled.div`
             border-radius: 5px;
         }
     }
-
     .no-habits {
-        margin-top: 28px;
+        margin-top: 8px;
     }
-
-    /* div {
-        width: 91px;
-        margin-bottom: 25px;
-        span {
-            color: ${(props) => props.theme.cardBgColor};
-        }
-        .CircularProgressbar-path {
-            stroke: ${(props) => props.theme.cardBgColor};
-        }
-        .CircularProgressbar-trail {
-            stroke: transparent;
-        }
-        .CircularProgressbar-background {
-            fill: ${(props) => props.theme.lightAccentColor};
-        }
-    } */
 `;
