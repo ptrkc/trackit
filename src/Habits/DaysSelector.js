@@ -1,19 +1,23 @@
 import { useState } from "react";
 import styled from "styled-components";
 export default function DaysSelector(props) {
-    const { selectedDays, setSelectedDays, disabled } = props.states;
+    const { disabled, newHabitInfo, setNewHabitInfo, selectedDays } =
+        props.states;
 
     const days = ["D", "S", "T", "Q", "Q", "S", "S"];
 
     function toggleDay(i) {
-        if (selectedDays.includes(i)) {
-            const newArr = selectedDays.filter((d) => d !== i);
-            setSelectedDays([...newArr]);
+        if (newHabitInfo.selectedDays.includes(i)) {
+            const newArr = newHabitInfo.selectedDays.filter((d) => d !== i);
+            setNewHabitInfo({ ...newHabitInfo, selectedDays: [...newArr] });
         } else {
-            setSelectedDays([...selectedDays, i]);
+            setNewHabitInfo({
+                ...newHabitInfo,
+                selectedDays: [...newHabitInfo.selectedDays, i],
+            });
         }
     }
-    if (!!setSelectedDays) {
+    if (!!setNewHabitInfo) {
         return (
             <DaysList>
                 {days.map((d, i) => {
@@ -22,7 +26,7 @@ export default function DaysSelector(props) {
                             disabled={disabled}
                             key={i}
                             onClick={() => toggleDay(i)}
-                            selected={selectedDays.includes(i)}
+                            selected={newHabitInfo.selectedDays.includes(i)}
                         >
                             {d}
                         </DaysButton>

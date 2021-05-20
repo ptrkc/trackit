@@ -6,7 +6,6 @@ import UserContext from "../contexts/UserContext";
 import dayjs from "dayjs";
 import "dayjs/locale/pt-br";
 import UserLogedIn from "../components/UserLogedIn";
-// import TodayContext from "../contexts/TodayContext";
 
 export default function History() {
     const { user } = useContext(UserContext);

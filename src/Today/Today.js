@@ -6,16 +6,14 @@ import dayjs from "dayjs";
 import "dayjs/locale/pt-br";
 import TodayHabitCard from "./TodayHabitCard";
 import UserLogedIn from "../components/UserLogedIn";
-import TodayContext from "../contexts/TodayContext";
 
 export default function Habits() {
     const [todayHabits, setTodayHabits] = useState([]);
-    const { user } = useContext(UserContext);
+    const { user, percentage, setPercentage } = useContext(UserContext);
     const currentDay = dayjs()
         .locale("pt-br")
         .format("dddd, DD/MM")
         .replace("-feira", "");
-    const { percentage, setPercentage } = useContext(TodayContext);
 
     UserLogedIn();
 
@@ -39,10 +37,9 @@ export default function Habits() {
             console.log(response.data);
             setTodayHabits([...response.data]);
             const doneList = response.data.filter((h) => h.done === true);
-            const percent = (
-                (doneList.length / response.data.length) *
-                100
-            ).toFixed(2);
+            const percent = Math.ceil(
+                (doneList.length / response.data.length) * 100
+            );
             setPercentage(percent);
         });
         todayHabitsRequest.catch((error) => console.log(error.response.data));

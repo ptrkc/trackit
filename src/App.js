@@ -1,5 +1,4 @@
 import UserContext from "./contexts/UserContext";
-import TodayContext from "./contexts/TodayContext";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 import ResetCSS from "./ResetCSS";
 import GlobalStyle from "./GlobalStyle";
@@ -17,36 +16,46 @@ import { useState } from "react";
 export default function App() {
     const [user, setUser] = useState("");
     const [percentage, setPercentage] = useState("");
-
+    const [newHabitInfo, setNewHabitInfo] = useState({
+        habit: "",
+        selectedDays: [],
+    });
     return (
-        <UserContext.Provider value={{ user, setUser }}>
-            <TodayContext.Provider value={{ percentage, setPercentage }}>
-                <ThemeProvider theme={defaultTheme}>
-                    <BrowserRouter>
-                        <ResetCSS />
-                        <GlobalStyle user={user} />
-                        <Header />
-                        <Switch>
-                            <Route path="/" exact>
-                                <SignIn />
-                            </Route>
-                            <Route path="/cadastro" exact>
-                                <SignUp />
-                            </Route>
-                            <Route path="/hoje" exact>
-                                <Today />
-                            </Route>
-                            <Route path="/habitos" exact>
-                                <Habits />
-                            </Route>
-                            <Route path="/historico" exact>
-                                <History />
-                            </Route>
-                        </Switch>
-                        <NavBar />
-                    </BrowserRouter>
-                </ThemeProvider>
-            </TodayContext.Provider>
+        <UserContext.Provider
+            value={{
+                user,
+                setUser,
+                percentage,
+                setPercentage,
+                newHabitInfo,
+                setNewHabitInfo,
+            }}
+        >
+            <ThemeProvider theme={defaultTheme}>
+                <BrowserRouter>
+                    <ResetCSS />
+                    <GlobalStyle user={user} />
+                    <Header />
+                    <Switch>
+                        <Route path="/" exact>
+                            <SignIn />
+                        </Route>
+                        <Route path="/cadastro" exact>
+                            <SignUp />
+                        </Route>
+                        <Route path="/hoje" exact>
+                            <Today />
+                        </Route>
+                        <Route path="/habitos" exact>
+                            <Habits />
+                        </Route>
+                        <Route path="/historico" exact>
+                            <History />
+                        </Route>
+                    </Switch>
+                    <NavBar />
+                </BrowserRouter>
+            </ThemeProvider>
         </UserContext.Provider>
     );
 }

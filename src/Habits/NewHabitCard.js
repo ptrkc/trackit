@@ -7,12 +7,10 @@ import DaysSelector from "./DaysSelector";
 import Loader from "react-loader-spinner";
 
 export default function NewHabitCard({ setShowNewHabitCard, getHabits }) {
-    const { user } = useContext(UserContext);
+    const { user, newHabitInfo, setNewHabitInfo } = useContext(UserContext);
     console.log(user);
     const [disabled, setDisabled] = useState(false);
-    const [habit, setHabit] = useState("");
     const [selectedDays, setSelectedDays] = useState([]);
-    const days = ["D", "S", "T", "Q", "Q", "S", "S"];
 
     function toggleDay(i) {
         if (selectedDays.includes(i)) {
@@ -24,7 +22,7 @@ export default function NewHabitCard({ setShowNewHabitCard, getHabits }) {
     }
 
     function createNewHabit() {
-        if (!habit) {
+        if (!newHabitInfo.habit) {
             alert("Preencha um nome para seu hábito.");
             return;
         } else if (!selectedDays.length) {
@@ -33,7 +31,7 @@ export default function NewHabitCard({ setShowNewHabitCard, getHabits }) {
         }
         setDisabled(true);
         const body = {
-            name: habit,
+            name: newHabitInfo.habit,
             days: selectedDays, // segunda, quarta e sexta
         };
         const config = {
@@ -61,13 +59,21 @@ export default function NewHabitCard({ setShowNewHabitCard, getHabits }) {
             <Input
                 type="text"
                 placeholder="nome do hábito"
-                value={habit}
-                onChange={(e) => setHabit(e.target.value)}
+                value={newHabitInfo.habit}
+                onChange={(e) =>
+                    setNewHabitInfo({ ...newHabitInfo, habit: e.target.value })
+                }
                 disabled={disabled}
             />
             <div className="days-list">
                 <DaysSelector
-                    states={{ selectedDays, setSelectedDays, disabled }}
+                    states={{
+                        selectedDays,
+                        setSelectedDays,
+                        disabled,
+                        newHabitInfo,
+                        setNewHabitInfo,
+                    }}
                 />
             </div>
             <div className="buttons">

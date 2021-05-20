@@ -4,12 +4,10 @@ import UserContext from "../contexts/UserContext";
 import { CircularProgressbarWithChildren } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
 import { useHistory } from "react-router";
-import TodayContext from "../contexts/TodayContext";
 
 export default function NavBar() {
-    const { user } = useContext(UserContext);
+    const { user, percentage } = useContext(UserContext);
     const history = useHistory();
-    const { percentage } = useContext(TodayContext);
 
     if (user !== "") {
         return (
