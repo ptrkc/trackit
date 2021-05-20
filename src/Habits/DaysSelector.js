@@ -12,22 +12,35 @@ export default function DaysSelector(props) {
             setSelectedDays([...selectedDays, i]);
         }
     }
-
-    return (
-        <DaysList>
-            {days.map((d, i) => {
-                return (
-                    <DaysButton
-                        key={i}
-                        onClick={() => toggleDay(i)}
-                        selected={selectedDays.includes(i)}
-                    >
-                        {d}
-                    </DaysButton>
-                );
-            })}
-        </DaysList>
-    );
+    if (!!setSelectedDays) {
+        return (
+            <DaysList>
+                {days.map((d, i) => {
+                    return (
+                        <DaysButton
+                            key={i}
+                            onClick={() => toggleDay(i)}
+                            selected={selectedDays.includes(i)}
+                        >
+                            {d}
+                        </DaysButton>
+                    );
+                })}
+            </DaysList>
+        );
+    } else {
+        return (
+            <DaysList>
+                {days.map((d, i) => {
+                    return (
+                        <DaysButton key={i} selected={selectedDays.includes(i)}>
+                            {d}
+                        </DaysButton>
+                    );
+                })}
+            </DaysList>
+        );
+    }
 }
 
 const DaysList = styled.div`

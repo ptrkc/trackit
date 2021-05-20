@@ -4,9 +4,11 @@ import styled from "styled-components";
 import UserContext from "../contexts/UserContext";
 import NewHabitCard from "./NewHabitCard";
 import DaysSelector from "./DaysSelector";
+import HabitCard from "./HabitCard";
 
 export default function Habits() {
     const [showNewHabitCard, setShowNewHabitCard] = useState(false);
+    const [habits, setHabits] = useState([]);
     const { user } = useContext(UserContext);
     console.log(user);
 
@@ -24,7 +26,10 @@ export default function Habits() {
             "https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits",
             config
         );
-        newHabitRequest.then((response) => console.log(response.data));
+        newHabitRequest.then((response) => {
+            console.log(response.data);
+            setHabits([...response.data]);
+        });
         newHabitRequest.catch((error) => console.log(error.response.data));
     }
     return (
@@ -34,12 +39,13 @@ export default function Habits() {
                 <button onClick={() => setShowNewHabitCard(true)}>+</button>
             </div>
             {showNewHabitCard ? (
-                <div className="new-habit-card">
-                    <NewHabitCard setShowNewHabitCard={setShowNewHabitCard} />
-                </div>
+                <NewHabitCard setShowNewHabitCard={setShowNewHabitCard} />
             ) : (
                 ""
             )}
+            {habits.map((habit) => {
+                return <HabitCard habit={habit} />;
+            })}
             <p className="no-habits">
                 Você não tem nenhum hábito cadastrado ainda. Adicione um hábito
                 para começar a trackear!
@@ -63,6 +69,7 @@ const StyledDiv = styled.div`
         justify-content: space-between;
         font-size: 23px;
         color: ${(props) => props.theme.darkAccentColor};
+        margin-bottom: 20px;
         button {
             background-color: ${(props) => props.theme.lightAccentColor};
             width: 40px;
@@ -75,9 +82,6 @@ const StyledDiv = styled.div`
             border: none;
             border-radius: 5px;
         }
-    }
-    div.new-habit-card {
-        margin-top: 20px;
     }
 
     .no-habits {

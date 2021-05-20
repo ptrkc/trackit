@@ -1,6 +1,6 @@
 import { useContext } from "react";
-import styled from "styled-components";
 import UserContext from "../contexts/UserContext";
+import styled from "styled-components";
 import { ReactComponent as Logo } from "./../assets/logo.svg";
 
 export default function Header() {
@@ -37,6 +37,7 @@ const FixedHeader = styled.div`
     top: 0px;
     background: ${(props) => props.theme.darkAccentColor};
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.15);
+    z-index: 1;
     div {
         margin: 0px 18px;
         display: flex;
