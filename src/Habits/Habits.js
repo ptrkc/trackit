@@ -1,3 +1,4 @@
+import axios from "axios";
 import { useContext, useState } from "react";
 import styled from "styled-components";
 import UserContext from "../contexts/UserContext";
@@ -6,6 +7,7 @@ export default function Habits() {
     const [showNewHabitCard, setShowNewHabitCard] = useState(false);
     const { user } = useContext(UserContext);
     console.log(user);
+
     return (
         <StyledDiv>
             <div className="my-habits">

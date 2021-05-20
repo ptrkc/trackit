@@ -1,11 +1,43 @@
+import axios from "axios";
 import { useContext, useState } from "react";
 import styled from "styled-components";
 import UserContext from "../contexts/UserContext";
 import Input from "./../components/Input";
 export default function NewHabitCard({ setShowNewHabitCard }) {
+    const { user } = useContext(UserContext);
+    console.log(user);
     const [disabled, setDisabled] = useState(false);
     const [habit, setHabit] = useState("");
+    const [selectedDays, setSelectedDays] = useState([]);
+    const days = ["D", "S", "T", "Q", "Q", "S", "S"];
 
+    function toggleDay(i) {
+        if (selectedDays.includes(i)) {
+            const newArr = selectedDays.filter((d) => d !== i);
+            setSelectedDays([...newArr]);
+        } else {
+            setSelectedDays([...selectedDays, i]);
+        }
+    }
+
+    function createNewHabit() {
+        const body = {
+            name: habit,
+            days: selectedDays, // segunda, quarta e sexta
+        };
+        const config = {
+            headers: {
+                Authorization: `Bearer ${user.token}`,
+            },
+        };
+        const newHabitRequest = axios.post(
+            "https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits",
+            body,
+            config
+        );
+        newHabitRequest.then((response) => console.log(response.data));
+        newHabitRequest.catch((error) => console.log(error.response.data));
+    }
     return (
         <Card>
             <Input
@@ -16,13 +48,17 @@ export default function NewHabitCard({ setShowNewHabitCard }) {
                 disabled={disabled}
             />
             <div className="days-list">
-                <button>D</button>
-                <button>S</button>
-                <button>T</button>
-                <button>Q</button>
-                <button>Q</button>
-                <button>S</button>
-                <button>S</button>
+                {days.map((d, i) => {
+                    return (
+                        <DaysButton
+                            key={i}
+                            onClick={() => toggleDay(i)}
+                            selected={selectedDays.includes(i) ? true : false}
+                        >
+                            {d}
+                        </DaysButton>
+                    );
+                })}
             </div>
             <div className="buttons">
                 <button
@@ -31,7 +67,7 @@ export default function NewHabitCard({ setShowNewHabitCard }) {
                 >
                     Cancelar
                 </button>
-                <button>Salvar</button>
+                <button onClick={createNewHabit}>Salvar</button>
             </div>
         </Card>
     );
@@ -48,26 +84,7 @@ const Card = styled.div`
     .days-list {
         display: flex;
         flex-direction: row;
-        button {
-            background-color: ${(props) =>
-                props.selected
-                    ? props.theme.inputSelectedColor
-                    : "transparent"};
-            margin-right: 4px;
-            margin-bottom: 29px;
-            width: 30px;
-            height: 30px;
-            font-size: 20px;
-            line-height: 25px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: ${(props) => props.theme.inputPlaceholderColor};
-            border: 1px solid ${(props) => props.theme.inputBorderColor};
-            border-radius: 5px;
-        }
     }
-
     .buttons {
         display: flex;
         justify-content: flex-end;
@@ -85,33 +102,24 @@ const Card = styled.div`
             background: ${(props) => props.theme.cardBgColor};
         }
     }
+`;
 
-    .my-habits {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        font-size: 23px;
-        color: ${(props) => props.theme.darkAccentColor};
-    }
-
-    .no-habits {
-        margin-top: 28px;
-    }
-
-    /* div {
-        width: 91px;
-        margin-bottom: 25px;
-        span {
-            color: ${(props) => props.theme.cardBgColor};
-        }
-        .CircularProgressbar-path {
-            stroke: ${(props) => props.theme.cardBgColor};
-        }
-        .CircularProgressbar-trail {
-            stroke: transparent;
-        }
-        .CircularProgressbar-background {
-            fill: ${(props) => props.theme.lightAccentColor};
-        }
-    } */
+const DaysButton = styled.button`
+    background-color: ${(props) =>
+        props.selected ? props.theme.inputSelectedColor : "transparent"};
+    margin-right: 4px;
+    margin-bottom: 29px;
+    width: 30px;
+    height: 30px;
+    font-size: 20px;
+    line-height: 25px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: ${(props) =>
+        props.selected
+            ? props.theme.cardBgColor
+            : props.theme.inputPlaceholderColor};
+    border: 1px solid ${(props) => props.theme.inputBorderColor};
+    border-radius: 5px;
 `;
