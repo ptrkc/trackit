@@ -12,27 +12,18 @@ export default function NewHabitCard({ setShowNewHabitCard, getHabits }) {
     const [disabled, setDisabled] = useState(false);
     const [selectedDays, setSelectedDays] = useState([]);
 
-    function toggleDay(i) {
-        if (selectedDays.includes(i)) {
-            const newArr = selectedDays.filter((d) => d !== i);
-            setSelectedDays([...newArr]);
-        } else {
-            setSelectedDays([...selectedDays, i]);
-        }
-    }
-
     function createNewHabit() {
         if (!newHabitInfo.habit) {
             alert("Preencha um nome para seu hábito.");
             return;
-        } else if (!selectedDays.length) {
+        } else if (!newHabitInfo.selectedDays.length) {
             alert("Escolha pelo menos 1 dia para praticar hábito.");
             return;
         }
         setDisabled(true);
         const body = {
             name: newHabitInfo.habit,
-            days: selectedDays, // segunda, quarta e sexta
+            days: newHabitInfo.selectedDays, // segunda, quarta e sexta
         };
         const config = {
             headers: {
@@ -48,8 +39,12 @@ export default function NewHabitCard({ setShowNewHabitCard, getHabits }) {
             setDisabled(false);
             getHabits();
             setShowNewHabitCard(false);
+            setNewHabitInfo({
+                habit: "",
+                selectedDays: [],
+            });
         });
-        newHabitRequest.catch((error) => {
+        newHabitRequest.catch(() => {
             setDisabled(false);
             alert("Algo deu errado. Tente novamente.");
         });

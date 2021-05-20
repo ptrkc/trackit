@@ -9,8 +9,13 @@ export default function DaysSelector(props) {
     function toggleDay(i) {
         if (newHabitInfo.selectedDays.includes(i)) {
             const newArr = newHabitInfo.selectedDays.filter((d) => d !== i);
+            console.log({ ...newHabitInfo, selectedDays: [...newArr] });
             setNewHabitInfo({ ...newHabitInfo, selectedDays: [...newArr] });
         } else {
+            console.log({
+                ...newHabitInfo,
+                selectedDays: [...newHabitInfo.selectedDays, i],
+            });
             setNewHabitInfo({
                 ...newHabitInfo,
                 selectedDays: [...newHabitInfo.selectedDays, i],
