@@ -1,7 +1,8 @@
 import { useState } from "react";
 import styled from "styled-components";
 export default function DaysSelector(props) {
-    const { selectedDays, setSelectedDays } = props.states;
+    const { selectedDays, setSelectedDays, disabled } = props.states;
+
     const days = ["D", "S", "T", "Q", "Q", "S", "S"];
 
     function toggleDay(i) {
@@ -18,6 +19,7 @@ export default function DaysSelector(props) {
                 {days.map((d, i) => {
                     return (
                         <DaysButton
+                            disabled={disabled}
                             key={i}
                             onClick={() => toggleDay(i)}
                             selected={selectedDays.includes(i)}
@@ -65,4 +67,7 @@ const DaysButton = styled.button`
             : props.theme.inputPlaceholderColor};
     border: 1px solid ${(props) => props.theme.inputBorderColor};
     border-radius: 5px;
+    &:disabled {
+        opacity: 0.7;
+    }
 `;

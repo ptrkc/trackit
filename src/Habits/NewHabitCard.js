@@ -4,6 +4,7 @@ import styled from "styled-components";
 import UserContext from "../contexts/UserContext";
 import Input from "./../components/Input";
 import DaysSelector from "./DaysSelector";
+import Loader from "react-loader-spinner";
 
 export default function NewHabitCard({ setShowNewHabitCard, getHabits }) {
     const { user } = useContext(UserContext);
@@ -23,6 +24,14 @@ export default function NewHabitCard({ setShowNewHabitCard, getHabits }) {
     }
 
     function createNewHabit() {
+        if (!habit) {
+            alert("Preencha um nome para seu hábito.");
+            return;
+        } else if (!selectedDays.length) {
+            alert("Escolha pelo menos 1 dia para praticar hábito.");
+            return;
+        }
+        setDisabled(true);
         const body = {
             name: habit,
             days: selectedDays, // segunda, quarta e sexta
@@ -38,10 +47,14 @@ export default function NewHabitCard({ setShowNewHabitCard, getHabits }) {
             config
         );
         newHabitRequest.then(() => {
+            setDisabled(false);
             getHabits();
             setShowNewHabitCard(false);
         });
-        newHabitRequest.catch((error) => console.log(error.response.data));
+        newHabitRequest.catch((error) => {
+            setDisabled(false);
+            alert("Algo deu errado. Tente novamente.");
+        });
     }
     return (
         <Card>
@@ -53,16 +66,30 @@ export default function NewHabitCard({ setShowNewHabitCard, getHabits }) {
                 disabled={disabled}
             />
             <div className="days-list">
-                <DaysSelector states={{ selectedDays, setSelectedDays }} />
+                <DaysSelector
+                    states={{ selectedDays, setSelectedDays, disabled }}
+                />
             </div>
             <div className="buttons">
                 <button
                     className="cancel"
+                    disabled={disabled}
                     onClick={() => setShowNewHabitCard(false)}
                 >
                     Cancelar
                 </button>
-                <button onClick={createNewHabit}>Salvar</button>
+                <button disabled={disabled} onClick={createNewHabit}>
+                    {disabled ? (
+                        <Loader
+                            type="ThreeDots"
+                            color="#FFFFFF"
+                            width={43}
+                            height={11}
+                        />
+                    ) : (
+                        "Salvar"
+                    )}
+                </button>
             </div>
         </Card>
     );
@@ -84,11 +111,15 @@ const Card = styled.div`
             margin-top: 29px;
             font-size: 16px;
             line-height: 20px;
-            padding: 7px 17px;
+            padding: 7px 0px;
+            width: 83px;
             border-radius: 5px;
             border: none;
             background: ${(props) => props.theme.lightAccentColor};
             color: ${(props) => props.theme.cardBgColor};
+            &:disabled {
+                opacity: 0.7;
+            }
         }
         .cancel {
             color: ${(props) => props.theme.lightAccentColor};
