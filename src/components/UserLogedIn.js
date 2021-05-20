@@ -8,10 +8,8 @@ export default function UserLogedIn() {
 
     useEffect(() => {
         if (!!localStorage.getItem("user")) {
-            console.log("existe");
             setUser(JSON.parse(localStorage.getItem("user")));
         } else {
-            console.log("não existe");
             history.push("/");
         }
     }, []);

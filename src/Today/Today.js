@@ -38,22 +38,19 @@ export default function Habits() {
     }
     return (
         <StyledDiv>
-            <div className="date">{today}</div>
-            {/* {showNewHabitCard ? (
-                <NewHabitCard
-                    setShowNewHabitCard={setShowNewHabitCard}
-                    getHabits={getHabits}
-                />
-            ) : (
-                ""
-            )} */}
+            <span className="date">{today}</span>
+            <span className="subtitle">Nenhum hábito concluído ainda</span>
             {todayHabits.map((habit) => {
-                return <TodayHabitCard key={habit.id} habit={habit} />;
+                return (
+                    <TodayHabitCard
+                        key={habit.id}
+                        habit={habit}
+                        getTodayHabits={getTodayHabits}
+                    />
+                );
             })}
             {!todayHabits.length ? (
-                <p className="no-habits">
-                    Você não tem nenhum hábito cadastrado para hoje!
-                </p>
+                <p>Você não tem nenhum hábito cadastrado para hoje!</p>
             ) : (
                 ""
             )}
@@ -62,6 +59,7 @@ export default function Habits() {
 }
 
 const StyledDiv = styled.div`
+    margin-top: 5px;
     display: flex;
     flex-direction: column;
     padding: 0px 18px;
@@ -71,7 +69,8 @@ const StyledDiv = styled.div`
         font-size: 23px;
         color: ${(props) => props.theme.darkAccentColor};
     }
-    .no-habits {
-        margin-top: 8px;
+    .subtitle {
+        color: ${(props) => props.theme.noneCompletedColor};
+        margin-bottom: 28px;
     }
 `;
