@@ -51,7 +51,7 @@ const DaysButton = styled.button`
     background-color: ${(props) =>
         props.selected ? props.theme.inputSelectedColor : "transparent"};
     margin-right: 4px;
-    margin-bottom: 29px;
+    margin-bottom: 0px;
     width: 30px;
     height: 30px;
     font-size: 20px;

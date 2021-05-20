@@ -85,6 +85,7 @@ const StyledDiv = styled.div`
             width: 40px;
             height: 35px;
             font-size: 27px;
+            margin-top: 15px;
             display: flex;
             align-items: center;
             justify-content: center;

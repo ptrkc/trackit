@@ -81,6 +81,7 @@ const Card = styled.div`
         display: flex;
         justify-content: flex-end;
         button {
+            margin-top: 29px;
             font-size: 16px;
             line-height: 20px;
             padding: 7px 17px;
