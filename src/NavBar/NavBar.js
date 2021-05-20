@@ -1,7 +1,6 @@
 import { useContext } from "react";
 import styled from "styled-components";
 import UserContext from "../contexts/UserContext";
-import { ReactComponent as Logo } from "./../assets/logo.svg";
 import { CircularProgressbarWithChildren } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
 import { useHistory } from "react-router";

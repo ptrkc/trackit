@@ -1,7 +1,7 @@
 import { useContext } from "react";
 import styled from "styled-components";
 import UserContext from "../contexts/UserContext";
-
+import NewHabitCard from "./NewHabitCard";
 export default function Habits() {
     const { user } = useContext(UserContext);
     console.log(user);
@@ -9,6 +9,9 @@ export default function Habits() {
         <StyledDiv>
             <div className="my-habits">
                 Meus Hábitos <button>+</button>
+            </div>
+            <div className="new-habit-card">
+                <NewHabitCard />
             </div>
             <p className="no-habits">
                 Você não tem nenhum hábito cadastrado ainda. Adicione um hábito
@@ -26,24 +29,28 @@ const StyledDiv = styled.div`
     line-height: 22px;
     /* background: ${(props) => props.theme.cardBgColor};
     color: ${(props) => props.theme.lightAccentColor}; */
-    button {
-        background-color: ${(props) => props.theme.lightAccentColor};
-        width: 40px;
-        height: 35px;
-        font-size: 27px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        color: ${(props) => props.theme.cardBgColor};
-        border: none;
-        border-radius: 5px;
-    }
+
     .my-habits {
         display: flex;
         align-items: center;
         justify-content: space-between;
         font-size: 23px;
         color: ${(props) => props.theme.darkAccentColor};
+        button {
+            background-color: ${(props) => props.theme.lightAccentColor};
+            width: 40px;
+            height: 35px;
+            font-size: 27px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: ${(props) => props.theme.cardBgColor};
+            border: none;
+            border-radius: 5px;
+        }
+    }
+    div.new-habit-card {
+        margin-top: 20px;
     }
 
     .no-habits {
