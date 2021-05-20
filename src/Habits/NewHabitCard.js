@@ -2,7 +2,7 @@ import { useContext, useState } from "react";
 import styled from "styled-components";
 import UserContext from "../contexts/UserContext";
 import Input from "./../components/Input";
-export default function NewHabitCard() {
+export default function NewHabitCard({ setShowNewHabitCard }) {
     const [disabled, setDisabled] = useState(false);
     const [habit, setHabit] = useState("");
 
@@ -25,7 +25,12 @@ export default function NewHabitCard() {
                 <button>S</button>
             </div>
             <div className="buttons">
-                <button className="cancel">Cancelar</button>
+                <button
+                    className="cancel"
+                    onClick={() => setShowNewHabitCard(false)}
+                >
+                    Cancelar
+                </button>
                 <button>Salvar</button>
             </div>
         </Card>

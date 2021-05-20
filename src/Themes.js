@@ -10,6 +10,7 @@ const defaultTheme = {
     noneCompletedColor: "#BABABA",
     uncheckedColor: "#E7E7E7",
     inputBorderColor: "#D5D5D5",
+    inputSelectedColor: "#CFCFCF",
     inputPlaceholderColor: "#DBDBDB",
 };
 

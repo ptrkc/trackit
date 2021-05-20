@@ -1,18 +1,24 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import styled from "styled-components";
 import UserContext from "../contexts/UserContext";
 import NewHabitCard from "./NewHabitCard";
 export default function Habits() {
+    const [showNewHabitCard, setShowNewHabitCard] = useState(false);
     const { user } = useContext(UserContext);
     console.log(user);
     return (
         <StyledDiv>
             <div className="my-habits">
-                Meus Hábitos <button>+</button>
+                Meus Hábitos
+                <button onClick={() => setShowNewHabitCard(true)}>+</button>
             </div>
-            <div className="new-habit-card">
-                <NewHabitCard />
-            </div>
+            {showNewHabitCard ? (
+                <div className="new-habit-card">
+                    <NewHabitCard setShowNewHabitCard={setShowNewHabitCard} />
+                </div>
+            ) : (
+                ""
+            )}
             <p className="no-habits">
                 Você não tem nenhum hábito cadastrado ainda. Adicione um hábito
                 para começar a trackear!
