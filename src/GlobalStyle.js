@@ -15,6 +15,9 @@ body {
 a {
     color: ${(props) => props.theme.lightAccentColor};
 }
+input, button {
+    font-family: inherit;
+}
 `;
 
 export default GlobalStyle;

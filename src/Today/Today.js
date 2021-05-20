@@ -11,7 +11,10 @@ import TodayContext from "../contexts/TodayContext";
 export default function Habits() {
     const [todayHabits, setTodayHabits] = useState([]);
     const { user } = useContext(UserContext);
-    const currentDay = dayjs().locale("pt-br").format("dddd, DD/MM");
+    const currentDay = dayjs()
+        .locale("pt-br")
+        .format("dddd, DD/MM")
+        .replace("-feira", "");
     const { percentage, setPercentage } = useContext(TodayContext);
 
     UserLogedIn();
