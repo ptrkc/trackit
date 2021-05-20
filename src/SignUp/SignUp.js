@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Link, useHistory } from "react-router-dom";
 import styled from "styled-components";
 import { ReactComponent as FullLogo } from "./../assets/full-logo.svg";
@@ -7,6 +7,8 @@ import SignButton from "./../components/SignButton.js";
 import axios from "axios";
 import Loader from "react-loader-spinner";
 import { isEmail, isURL } from "./../components/ValidateInputs";
+import UserContext from "../contexts/UserContext";
+import UserLogedIn from "../components/UserLogedIn";
 
 export default function SignUp() {
     const [email, setEmail] = useState("");
@@ -15,6 +17,16 @@ export default function SignUp() {
     const [image, setImage] = useState("");
     const [disabled, setDisabled] = useState(false);
     const history = useHistory();
+    const { user } = useContext(UserContext);
+
+    UserLogedIn();
+
+    useEffect(() => {
+        if (user) {
+            history.push("/hoje");
+            return;
+        }
+    }, [user]);
 
     function createAccount(body) {
         setDisabled(true);

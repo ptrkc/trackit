@@ -5,7 +5,6 @@ import { ReactComponent as Logo } from "./../assets/logo.svg";
 
 export default function Header() {
     const { user } = useContext(UserContext);
-    console.log(user);
     if (user !== "") {
         return (
             <>

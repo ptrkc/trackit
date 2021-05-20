@@ -5,16 +5,20 @@ import UserContext from "../contexts/UserContext";
 import NewHabitCard from "./NewHabitCard";
 import DaysSelector from "./DaysSelector";
 import HabitCard from "./HabitCard";
+import UserLogedIn from "../components/UserLogedIn";
 
 export default function Habits() {
     const [showNewHabitCard, setShowNewHabitCard] = useState(false);
     const [habits, setHabits] = useState([]);
     const { user } = useContext(UserContext);
-    console.log(user);
+
+    UserLogedIn();
 
     useEffect(() => {
-        getHabits();
-    }, []);
+        if (user) {
+            getHabits();
+        }
+    }, [user]);
 
     function getHabits() {
         const config = {
@@ -43,20 +47,22 @@ export default function Habits() {
                     setShowNewHabitCard={setShowNewHabitCard}
                     getHabits={getHabits}
                 />
-            ) : (
-                ""
-            )}
+            ) : undefined}
             {habits.map((habit) => {
-                return <HabitCard habit={habit} getHabits={getHabits} />;
+                return (
+                    <HabitCard
+                        key={habit.id}
+                        habit={habit}
+                        getHabits={getHabits}
+                    />
+                );
             })}
             {!habits.length ? (
                 <p className="no-habits">
                     Você não tem nenhum hábito cadastrado ainda. Adicione um
                     hábito para começar a trackear!
                 </p>
-            ) : (
-                ""
-            )}
+            ) : undefined}
         </StyledDiv>
     );
 }

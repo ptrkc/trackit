@@ -4,15 +4,21 @@ import { useContext, useEffect, useState } from "react";
 import UserContext from "../contexts/UserContext";
 import dayjs from "dayjs";
 import "dayjs/locale/pt-br";
+import TodayHabitCard from "./TodayHabitCard";
+import UserLogedIn from "../components/UserLogedIn";
 
 export default function Habits() {
     const [todayHabits, setTodayHabits] = useState([]);
     const { user } = useContext(UserContext);
-
     const today = dayjs().locale("pt-br").format("dddd, DD/MM");
+
+    UserLogedIn();
+
     useEffect(() => {
-        getTodayHabits();
-    }, []);
+        if (user) {
+            getTodayHabits();
+        }
+    }, [user]);
 
     function getTodayHabits() {
         const config = {
@@ -42,12 +48,7 @@ export default function Habits() {
                 ""
             )} */}
             {todayHabits.map((habit) => {
-                return (
-                    <span>
-                        {habit.id} {habit.name} {habit.done}{" "}
-                        {habit.currentSequence} {habit.highestSequence}{" "}
-                    </span>
-                );
+                return <TodayHabitCard key={habit.id} habit={habit} />;
             })}
             {!todayHabits.length ? (
                 <p className="no-habits">

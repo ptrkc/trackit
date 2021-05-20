@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Link, useHistory } from "react-router-dom";
 import styled from "styled-components";
 import { ReactComponent as FullLogo } from "./../assets/full-logo.svg";
@@ -8,14 +8,23 @@ import axios from "axios";
 import Loader from "react-loader-spinner";
 import { isEmail } from "./../components/ValidateInputs";
 import UserContext from "../contexts/UserContext";
+import UserLogedIn from "../components/UserLogedIn";
 
 export default function SignIn() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [disabled, setDisabled] = useState(false);
     const history = useHistory();
+    const { user } = useContext(UserContext);
 
-    const { setUser } = useContext(UserContext);
+    UserLogedIn();
+
+    useEffect(() => {
+        if (user) {
+            history.push("/hoje");
+            return;
+        }
+    }, [user]);
 
     function signIn(body) {
         setDisabled(true);
@@ -24,8 +33,9 @@ export default function SignIn() {
             body
         );
         signInRequest.then((response) => {
-            setUser(response.data);
+            // setUser(response.data);
             setDisabled(false);
+            localStorage.setItem("user", JSON.stringify(response.data));
             history.push("/hoje");
         });
         signInRequest.catch((error) => {
