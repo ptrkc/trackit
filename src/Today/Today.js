@@ -6,11 +6,13 @@ import dayjs from "dayjs";
 import "dayjs/locale/pt-br";
 import TodayHabitCard from "./TodayHabitCard";
 import UserLogedIn from "../components/UserLogedIn";
+import TodayContext from "../contexts/TodayContext";
 
 export default function Habits() {
     const [todayHabits, setTodayHabits] = useState([]);
     const { user } = useContext(UserContext);
-    const today = dayjs().locale("pt-br").format("dddd, DD/MM");
+    const currentDay = dayjs().locale("pt-br").format("dddd, DD/MM");
+    const { percentage, setPercentage } = useContext(TodayContext);
 
     UserLogedIn();
 
@@ -33,13 +35,24 @@ export default function Habits() {
         todayHabitsRequest.then((response) => {
             console.log(response.data);
             setTodayHabits([...response.data]);
+            const doneList = response.data.filter((h) => h.done === true);
+            const percent = (
+                (doneList.length / response.data.length) *
+                100
+            ).toFixed(2);
+            setPercentage(percent);
         });
         todayHabitsRequest.catch((error) => console.log(error.response.data));
     }
+    console.log(percentage);
     return (
         <StyledDiv>
-            <span className="date">{today}</span>
-            <span className="subtitle">Nenhum hábito concluído ainda</span>
+            <span className="date">{currentDay}</span>
+            <Subtitle percentage={percentage}>
+                {percentage > 0
+                    ? `${percentage}% dos hábitos concluídos`
+                    : "Nenhum hábito concluído ainda"}
+            </Subtitle>
             {todayHabits.map((habit) => {
                 return (
                     <TodayHabitCard
@@ -68,9 +81,13 @@ const StyledDiv = styled.div`
     .date {
         font-size: 23px;
         color: ${(props) => props.theme.darkAccentColor};
+        margin-bottom: 5px;
     }
-    .subtitle {
-        color: ${(props) => props.theme.noneCompletedColor};
-        margin-bottom: 28px;
-    }
+`;
+const Subtitle = styled.span`
+    color: ${(props) =>
+        parseInt(props.percentage) > 0
+            ? props.theme.doneColor
+            : props.theme.noneCompletedColor};
+    margin-bottom: 28px;
 `;

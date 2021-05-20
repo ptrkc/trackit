@@ -2,10 +2,12 @@ import axios from "axios";
 import styled from "styled-components";
 import { useContext } from "react";
 import UserContext from "../contexts/UserContext";
+
 import { ReactComponent as Checkmark } from "./../assets/check.svg";
 
 export default function TodayHabitCard({ habit, getTodayHabits }) {
     const { currentSequence, done, highestSequence, id, name } = habit;
+    const isMax = highestSequence > 0 && currentSequence === highestSequence;
     const { user } = useContext(UserContext);
 
     function toggleCheck(id, isChecked) {
@@ -31,19 +33,22 @@ export default function TodayHabitCard({ habit, getTodayHabits }) {
             <div className="left">
                 <p className="title"> {name}</p>
                 <p>
-                    Sequência atual: {currentSequence} dia
-                    {currentSequence > 1 ? "s" : ""}.
+                    Sequência atual:{" "}
+                    <CurrSeq done={done}>
+                        {currentSequence} dia
+                        {currentSequence > 1 ? "s" : ""}
+                    </CurrSeq>
                 </p>
                 <p>
-                    Sequencia maxima: {highestSequence} dia
-                    {highestSequence > 1 ? "s" : ""}.
+                    Sequencia maxima:{" "}
+                    <MaxSeq isMax={isMax}>
+                        {highestSequence} dia
+                        {highestSequence > 1 ? "s" : ""}
+                    </MaxSeq>
                 </p>
             </div>
             <div className="right">
-                <CheckButton
-                    onClick={() => toggleCheck(id, done)}
-                    done={done ? 1 : 0}
-                >
+                <CheckButton onClick={() => toggleCheck(id, done)} done={done}>
                     <Checkmark />
                 </CheckButton>
             </div>
@@ -84,4 +89,10 @@ const CheckButton = styled.button`
     border-radius: 5px;
     color: ${(props) => props.theme.cardBgColor};
     border: none;
+`;
+const CurrSeq = styled.span`
+    color: ${(props) => (props.done ? props.theme.doneColor : "inherit")};
+`;
+const MaxSeq = styled.span`
+    color: ${(props) => (props.isMax ? props.theme.doneColor : "inherit")};
 `;

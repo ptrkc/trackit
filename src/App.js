@@ -1,5 +1,6 @@
 import UserContext from "./contexts/UserContext";
-import { BrowserRouter, Switch, Route, useHistory } from "react-router-dom";
+import TodayContext from "./contexts/TodayContext";
+import { BrowserRouter, Switch, Route } from "react-router-dom";
 import ResetCSS from "./ResetCSS";
 import GlobalStyle from "./GlobalStyle";
 import { ThemeProvider } from "styled-components";
@@ -11,38 +12,41 @@ import Today from "./Today/Today";
 import Habits from "./Habits/Habits";
 import History from "./History/History";
 import NavBar from "./NavBar/NavBar";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 export default function App() {
     const [user, setUser] = useState("");
+    const [percentage, setPercentage] = useState("");
 
     return (
         <UserContext.Provider value={{ user, setUser }}>
-            <ThemeProvider theme={defaultTheme}>
-                <BrowserRouter>
-                    <ResetCSS />
-                    <GlobalStyle user={user} />
-                    <Header />
-                    <Switch>
-                        <Route path="/" exact>
-                            <SignIn />
-                        </Route>
-                        <Route path="/cadastro" exact>
-                            <SignUp />
-                        </Route>
-                        <Route path="/hoje" exact>
-                            <Today />
-                        </Route>
-                        <Route path="/habitos" exact>
-                            <Habits />
-                        </Route>
-                        <Route path="/historico" exact>
-                            <History />
-                        </Route>
-                    </Switch>
-                    <NavBar />
-                </BrowserRouter>
-            </ThemeProvider>
+            <TodayContext.Provider value={{ percentage, setPercentage }}>
+                <ThemeProvider theme={defaultTheme}>
+                    <BrowserRouter>
+                        <ResetCSS />
+                        <GlobalStyle user={user} />
+                        <Header />
+                        <Switch>
+                            <Route path="/" exact>
+                                <SignIn />
+                            </Route>
+                            <Route path="/cadastro" exact>
+                                <SignUp />
+                            </Route>
+                            <Route path="/hoje" exact>
+                                <Today />
+                            </Route>
+                            <Route path="/habitos" exact>
+                                <Habits />
+                            </Route>
+                            <Route path="/historico" exact>
+                                <History />
+                            </Route>
+                        </Switch>
+                        <NavBar />
+                    </BrowserRouter>
+                </ThemeProvider>
+            </TodayContext.Provider>
         </UserContext.Provider>
     );
 }
