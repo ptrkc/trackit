@@ -7,11 +7,14 @@ import dayjs from "dayjs";
 import "dayjs/locale/pt-br";
 import UserLogedIn from "../components/UserLogedIn";
 import "react-calendar/dist/Calendar.css";
+import HistoryHabitCard from "./HistoryHabitCard";
 
 export default function History() {
+    const today = dayjs().format("DD/MM/YYYY");
     const { user } = useContext(UserContext);
     const [value, onChange] = useState(new Date());
-    const [habitHistory, setHabitHistory] = useState("");
+    const [selectedDayHabits, setSelectedDayHabits] = useState([]);
+    const [habitHistory, setHabitHistory] = useState([]);
     const [allDoneDays, setAllDoneDays] = useState([]);
     const [notAllDoneDays, setNotAllDoneDays] = useState([]);
     const fakeHistory = [
@@ -125,6 +128,9 @@ export default function History() {
             console.log(response.data);
             setHabitHistory(response.data);
             sortHabitsDoneDay(response.data);
+            setSelectedDayHabits(
+                response.data.find((h) => h.day === today).habits
+            );
             // setHabitHistory(fakeHistory);
             // sortHabitsDoneDay(fakeHistory);
         });
@@ -157,6 +163,16 @@ export default function History() {
             }
         }
     }
+    function changeActiveDay(value) {
+        const day = dayjs(value).format("DD/MM/YYYY");
+        const clickedDay = habitHistory.find((h) => h.day === day);
+        if (!!clickedDay) {
+            setSelectedDayHabits(clickedDay.habits);
+            console.log(clickedDay.habits);
+        } else {
+            setSelectedDayHabits([]);
+        }
+    }
 
     return (
         <Container>
@@ -164,6 +180,7 @@ export default function History() {
             <CalendarContainer>
                 <Calendar
                     onChange={onChange}
+                    onClickDay={changeActiveDay}
                     value={value}
                     locale={"pt-br"}
                     calendarType={"US"}
@@ -178,6 +195,10 @@ export default function History() {
                         .replace("-feira", "")
                 )}
             </p>
+
+            {selectedDayHabits.map((habit) => {
+                return <HistoryHabitCard key={habit.id} habit={habit} />;
+            })}
 
             {/* {!todayHabits.length ? (
                 <p>Você não tem nenhum hábito cadastrado para hoje!</p>
@@ -217,7 +238,7 @@ const CalendarContainer = styled.div`
         background-color: #ea5766;
     }
     .react-calendar__tile {
-        height: 50px;
+        height: 48px;
         text-align: center;
         padding: 0px;
     }
