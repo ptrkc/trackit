@@ -3,7 +3,6 @@ import { useContext, useEffect, useState } from "react";
 import styled from "styled-components";
 import UserContext from "../contexts/UserContext";
 import NewHabitCard from "./NewHabitCard";
-import DaysSelector from "./DaysSelector";
 import HabitCard from "./HabitCard";
 import UserLogedIn from "../components/UserLogedIn";
 

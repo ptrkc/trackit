@@ -1,6 +1,5 @@
 import axios from "axios";
 import styled from "styled-components";
-import Input from "./../components/Input";
 import DaysSelector from "./DaysSelector";
 import { ReactComponent as Trash } from "./../assets/trash.svg";
 import { useContext } from "react";
