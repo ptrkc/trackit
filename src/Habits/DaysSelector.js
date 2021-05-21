@@ -28,6 +28,7 @@ export default function DaysSelector(props) {
                 {days.map((d, i) => {
                     return (
                         <DaysButton
+                            type="button"
                             disabled={disabled}
                             key={i}
                             onClick={() => toggleDay(i)}

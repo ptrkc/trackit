@@ -8,16 +8,17 @@ import Loader from "react-loader-spinner";
 
 export default function NewHabitCard({ setShowNewHabitCard, getHabits }) {
     const { user, newHabitInfo, setNewHabitInfo } = useContext(UserContext);
-    console.log(user);
     const [disabled, setDisabled] = useState(false);
     const [selectedDays, setSelectedDays] = useState([]);
+    const [errorMessage, setErrorMessage] = useState(<>&nbsp;</>);
 
-    function createNewHabit() {
+    function createNewHabit(event) {
+        event.preventDefault();
         if (!newHabitInfo.habit) {
-            alert("Preencha um nome para seu hábito.");
+            setErrorMessage("Preencha um nome para seu hábito.");
             return;
         } else if (!newHabitInfo.selectedDays.length) {
-            alert("Escolha pelo menos 1 dia para praticar hábito.");
+            setErrorMessage("Escolha pelo menos 1 dia.");
             return;
         }
         setDisabled(true);
@@ -46,21 +47,25 @@ export default function NewHabitCard({ setShowNewHabitCard, getHabits }) {
         });
         newHabitRequest.catch(() => {
             setDisabled(false);
-            alert("Algo deu errado. Tente novamente.");
+            setErrorMessage("Algo deu errado. Tente novamente.");
         });
     }
     return (
-        <Card>
+        <Card onSubmit={createNewHabit}>
             <Input
                 type="text"
                 placeholder="nome do hábito"
                 value={newHabitInfo.habit}
-                onChange={(e) =>
-                    setNewHabitInfo({ ...newHabitInfo, habit: e.target.value })
-                }
+                onChange={(e) => {
+                    setErrorMessage(<>&nbsp;</>);
+                    setNewHabitInfo({ ...newHabitInfo, habit: e.target.value });
+                }}
                 disabled={disabled}
             />
-            <div className="days-list">
+            <div
+                className="days-list"
+                onClick={() => setErrorMessage(<>&nbsp;</>)}
+            >
                 <DaysSelector
                     states={{
                         selectedDays,
@@ -71,15 +76,17 @@ export default function NewHabitCard({ setShowNewHabitCard, getHabits }) {
                     }}
                 />
             </div>
+            <span>{errorMessage}</span>
             <div className="buttons">
                 <button
+                    type="button"
                     className="cancel"
                     disabled={disabled}
                     onClick={() => setShowNewHabitCard(false)}
                 >
                     Cancelar
                 </button>
-                <button disabled={disabled} onClick={createNewHabit}>
+                <button disabled={disabled}>
                     {disabled ? (
                         <Loader
                             type="ThreeDots"
@@ -96,7 +103,7 @@ export default function NewHabitCard({ setShowNewHabitCard, getHabits }) {
     );
 }
 
-const Card = styled.div`
+const Card = styled.form`
     display: flex;
     flex-direction: column;
     padding: 18px;
@@ -105,11 +112,16 @@ const Card = styled.div`
     background: ${(props) => props.theme.cardBgColor};
     border-radius: 5px;
     margin-bottom: 29px;
+
+    span {
+        color: #ff4b4b;
+        font-size: 14px;
+    }
     .buttons {
         display: flex;
         justify-content: flex-end;
         button {
-            margin-top: 29px;
+            margin-top: 5px;
             font-size: 16px;
             line-height: 20px;
             padding: 7px 0px;
