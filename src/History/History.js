@@ -141,6 +141,9 @@ export default function History() {
         const allDoneArray = [];
         const notAllDoneArray = [];
         responseArray.forEach((day) => {
+            if (day.day === today) {
+                return;
+            }
             const doneArray = day.habits.map((habit) => habit.done);
             const allDone = doneArray.reduce((acc, cur) => acc && cur);
             if (allDone) {
@@ -187,24 +190,20 @@ export default function History() {
                     tileClassName={tileClassName}
                 />
             </CalendarContainer>
-            <p>
-                {String(
-                    dayjs(value)
-                        .locale("pt-br")
-                        .format("dddd, DD/MM/YYYY")
-                        .replace("-feira", "")
-                )}
-            </p>
-
-            {selectedDayHabits.map((habit) => {
-                return <HistoryHabitCard key={habit.id} habit={habit} />;
-            })}
-
-            {/* {!todayHabits.length ? (
-                <p>Você não tem nenhum hábito cadastrado para hoje!</p>
-            ) : (
-                ""
-            )} */}
+            <div>
+                <p>
+                    {String(
+                        dayjs(value)
+                            .locale("pt-br")
+                            .format("dddd, DD/MM/YYYY")
+                            .replace("-feira", "")
+                    )}
+                </p>
+                {selectedDayHabits.map((habit) => {
+                    return <HistoryHabitCard key={habit.id} habit={habit} />;
+                })}
+                {!selectedDayHabits.length ? <p>Nenhum hábito no dia.</p> : ""}
+            </div>
         </Container>
     );
 }
@@ -220,6 +219,9 @@ const Container = styled.div`
         font-size: 23px;
         color: ${(props) => props.theme.darkAccentColor};
     }
+    div p {
+        margin-bottom: 15px;
+    }
 `;
 
 const CalendarContainer = styled.div`
@@ -227,6 +229,7 @@ const CalendarContainer = styled.div`
     align-items: center;
     justify-content: center;
     margin: 12px 0px;
+    color: black;
     .habit-days {
         border: 5px solid white;
         border-radius: 50%;
