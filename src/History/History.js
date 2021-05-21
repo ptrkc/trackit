@@ -17,94 +17,6 @@ export default function History() {
     const [habitHistory, setHabitHistory] = useState([]);
     const [allDoneDays, setAllDoneDays] = useState([]);
     const [notAllDoneDays, setNotAllDoneDays] = useState([]);
-    const fakeHistory = [
-        {
-            day: "20/05/2021",
-            habits: [
-                {
-                    id: 3,
-                    name: "Acordar",
-                    date: "2021-05-20T12:00:00.000Z",
-                    weekDay: 4,
-                    historyId: null,
-                    done: false,
-                },
-            ],
-        },
-        {
-            day: "19/05/2021",
-            habits: [
-                {
-                    id: 3,
-                    name: "Acordar",
-                    date: "2021-05-19T12:00:00.000Z",
-                    weekDay: 3,
-                    historyId: 626,
-                    done: true,
-                },
-                {
-                    id: 1,
-                    name: "Ler 1 capítulo do livro",
-                    date: "2021-05-19T12:00:00.000Z",
-                    weekDay: 3,
-                    historyId: 625,
-                    done: true,
-                },
-            ],
-        },
-        {
-            day: "18/05/2021",
-            habits: [
-                {
-                    id: 3,
-                    name: "Acordar",
-                    date: "2021-05-18T12:00:00.000Z",
-                    weekDay: 2,
-                    historyId: 7,
-                    done: true,
-                },
-            ],
-        },
-        {
-            day: "17/05/2021",
-            habits: [
-                {
-                    id: 1,
-                    name: "Ler 1 capítulo do livro",
-                    date: "2021-05-17T12:00:00.000Z",
-                    weekDay: 1,
-                    historyId: 1,
-                    done: true,
-                },
-            ],
-        },
-        {
-            day: "16/05/2021",
-            habits: [
-                {
-                    id: 1,
-                    name: "Ler 1 capítulo do livro",
-                    date: "2021-05-16T12:00:00.000Z",
-                    weekDay: 0,
-                    historyId: null,
-                    done: false,
-                },
-            ],
-        },
-        {
-            day: "14/05/2021",
-            habits: [
-                {
-                    id: 1,
-                    name: "Ler 1 capítulo do livro",
-                    date: "2021-05-14T12:00:00.000Z",
-                    weekDay: 5,
-                    historyId: null,
-                    done: false,
-                },
-            ],
-        },
-    ];
 
     UserLogedIn();
 
@@ -125,16 +37,15 @@ export default function History() {
             config
         );
         historyRequest.then((response) => {
-            console.log(response.data);
             setHabitHistory(response.data);
             sortHabitsDoneDay(response.data);
             setSelectedDayHabits(
                 response.data.find((h) => h.day === today).habits
             );
-            // setHabitHistory(fakeHistory);
-            // sortHabitsDoneDay(fakeHistory);
         });
-        historyRequest.catch((error) => console.log(error.response.data));
+        historyRequest.catch(() =>
+            alert("Erro ao carregar histórico. Tente novamente.")
+        );
     }
 
     function sortHabitsDoneDay(responseArray) {
@@ -171,7 +82,6 @@ export default function History() {
         const clickedDay = habitHistory.find((h) => h.day === day);
         if (!!clickedDay) {
             setSelectedDayHabits(clickedDay.habits);
-            console.log(clickedDay.habits);
         } else {
             setSelectedDayHabits([]);
         }

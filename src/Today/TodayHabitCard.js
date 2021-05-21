@@ -16,7 +16,6 @@ export default function TodayHabitCard({ habit, getTodayHabits }) {
 
     function toggleCheck(id, isChecked) {
         if (isLoading) {
-            console.log("bye");
             return;
         }
         setIsLoading(true);

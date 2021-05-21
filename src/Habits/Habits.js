@@ -31,10 +31,11 @@ export default function Habits() {
             config
         );
         newHabitRequest.then((response) => {
-            console.log(response.data);
             setHabits([...response.data]);
         });
-        newHabitRequest.catch((error) => console.log(error.response.data));
+        newHabitRequest.catch(() =>
+            alert("Erro ao carregar hábitos. Teste novamente.")
+        );
     }
     return (
         <StyledDiv>

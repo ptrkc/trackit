@@ -34,7 +34,6 @@ export default function Habits() {
             config
         );
         todayHabitsRequest.then((response) => {
-            console.log(response.data);
             setTodayHabits([...response.data]);
             const doneList = response.data.filter((h) => h.done === true);
             const percent = Math.ceil(
@@ -42,7 +41,9 @@ export default function Habits() {
             );
             setPercentage(percent);
         });
-        todayHabitsRequest.catch((error) => console.log(error.response.data));
+        todayHabitsRequest.catch(() =>
+            alert("Erro ao carregar hábitos. Tente novamente.")
+        );
     }
     return (
         <StyledDiv>
