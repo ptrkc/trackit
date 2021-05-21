@@ -9,12 +9,12 @@ import UserLogedIn from "../components/UserLogedIn";
 
 export default function Habits() {
     const [showNewHabitCard, setShowNewHabitCard] = useState(false);
-    const { user, habits, setHabits } = useContext(UserContext);
+    const { user, habits, setHabits, justStarted } = useContext(UserContext);
 
     UserLogedIn();
 
     useEffect(() => {
-        if (user) {
+        if (user && !justStarted) {
             getHabits();
         }
     }, [user]);

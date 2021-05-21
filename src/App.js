@@ -16,6 +16,7 @@ import GetDataArrays from "./components/GetDataArrays";
 
 export default function App() {
     const [user, setUser] = useState("");
+    const [justStarted, setJustStarted] = useState(true);
     const [percentage, setPercentage] = useState("");
     const [newHabitInfo, setNewHabitInfo] = useState({
         habit: "",
@@ -28,6 +29,8 @@ export default function App() {
     return (
         <UserContext.Provider
             value={{
+                justStarted,
+                setJustStarted,
                 user,
                 setUser,
                 percentage,

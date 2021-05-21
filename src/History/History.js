@@ -11,7 +11,8 @@ import HistoryHabitCard from "./HistoryHabitCard";
 
 export default function History() {
     const today = dayjs().format("DD/MM/YYYY");
-    const { user, habitHistory, setHabitHistory } = useContext(UserContext);
+    const { user, habitHistory, setHabitHistory, justStarted } =
+        useContext(UserContext);
     const [value, onChange] = useState(new Date());
     const [selectedDayHabits, setSelectedDayHabits] = useState([]);
     const [allDoneDays, setAllDoneDays] = useState([]);
@@ -20,7 +21,7 @@ export default function History() {
     UserLogedIn();
 
     useEffect(() => {
-        if (user) {
+        if (user && !justStarted) {
             getHabitHistory();
         }
         if (habitHistory.length > 0) {
@@ -29,7 +30,7 @@ export default function History() {
                 habitHistory.find((h) => h.day === today).habits
             );
         }
-    }, [user]);
+    }, [user, habitHistory.length]);
 
     function getHabitHistory() {
         const config = {

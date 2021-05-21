@@ -8,8 +8,14 @@ import TodayHabitCard from "./TodayHabitCard";
 import UserLogedIn from "../components/UserLogedIn";
 
 export default function Habits() {
-    const { user, percentage, setPercentage, todayHabits, setTodayHabits } =
-        useContext(UserContext);
+    const {
+        user,
+        percentage,
+        setPercentage,
+        todayHabits,
+        setTodayHabits,
+        justStarted,
+    } = useContext(UserContext);
     const today = dayjs()
         .locale("pt-br")
         .format("dddd, DD/MM")
@@ -18,7 +24,7 @@ export default function Habits() {
     UserLogedIn();
 
     useEffect(() => {
-        if (user) {
+        if (user && !justStarted) {
             getTodayHabits();
         }
     }, [user]);
