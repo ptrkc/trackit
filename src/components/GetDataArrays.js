@@ -16,15 +16,12 @@ export default function GetDataArrays() {
 
     UserLogedIn();
 
-    console.log(1);
-
     useEffect(() => {
         if (user && justStarted) {
             getTodayHabits();
             getHabits();
             getHabitHistory();
             setJustStarted(false);
-            console.log(2);
         }
     }, [user]);
 

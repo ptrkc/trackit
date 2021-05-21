@@ -35,12 +35,10 @@ export default function SignUp() {
             body
         );
         createAccountRequest.then((response) => {
-            console.log(response.data);
             setDisabled(false);
             history.push("/");
         });
         createAccountRequest.catch((error) => {
-            console.log(error.response.data);
             if (error.response.status === 409) {
                 setErrorMessage(error.response.data.message);
             } else {

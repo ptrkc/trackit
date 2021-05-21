@@ -45,7 +45,6 @@ export default function History() {
         historyRequest.then((response) => {
             setHabitHistory(response.data);
             sortHabitsDoneDay(response.data);
-            console.log(response.data);
             const firstSelected = response.data.find((h) => h.day === today);
             if (firstSelected !== undefined) {
                 setSelectedDayHabits(
