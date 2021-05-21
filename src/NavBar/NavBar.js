@@ -14,9 +14,9 @@ export default function NavBar() {
             <>
                 <WhiteSpace />
                 <FixedNavBar>
-                    <span onClick={() => history.push("/habitos")}>
+                    <NavButton onClick={() => history.push("/habitos")}>
                         Hábitos
-                    </span>
+                    </NavButton>
                     <span onClick={() => history.push("/hoje")}>
                         <CircularProgressbarWithChildren
                             value={percentage}
@@ -26,9 +26,9 @@ export default function NavBar() {
                             <span>Hoje</span>
                         </CircularProgressbarWithChildren>
                     </span>
-                    <span onClick={() => history.push("/historico")}>
+                    <NavButton onClick={() => history.push("/historico")}>
                         Histórico
-                    </span>
+                    </NavButton>
                 </FixedNavBar>
             </>
         );
@@ -49,11 +49,10 @@ const FixedNavBar = styled.div`
     left: 0px;
     right: 0px;
     bottom: 0px;
-    padding: 0px 36px;
     font-size: 18px;
     background: ${(props) => props.theme.cardBgColor};
     color: ${(props) => props.theme.lightAccentColor};
-    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.15);
+    box-shadow: 0px -2px 10px rgba(0, 0, 0, 0.1);
 
     div {
         width: 91px;
@@ -71,4 +70,13 @@ const FixedNavBar = styled.div`
             fill: ${(props) => props.theme.lightAccentColor};
         }
     }
+`;
+
+const NavButton = styled.button`
+    border: none;
+    background-color: transparent;
+    font-size: inherit;
+    height: 100%;
+    width: 100%;
+    color: inherit;
 `;
