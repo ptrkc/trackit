@@ -10,7 +10,7 @@ import UserLogedIn from "../components/UserLogedIn";
 export default function Habits() {
     const [todayHabits, setTodayHabits] = useState([]);
     const { user, percentage, setPercentage } = useContext(UserContext);
-    const currentDay = dayjs()
+    const today = dayjs()
         .locale("pt-br")
         .format("dddd, DD/MM")
         .replace("-feira", "");
@@ -44,10 +44,9 @@ export default function Habits() {
         });
         todayHabitsRequest.catch((error) => console.log(error.response.data));
     }
-    console.log(percentage);
     return (
         <StyledDiv>
-            <span className="date">{currentDay}</span>
+            <span className="date">{today}</span>
             <Subtitle percentage={percentage}>
                 {percentage > 0
                     ? `${percentage}% dos hábitos concluídos`

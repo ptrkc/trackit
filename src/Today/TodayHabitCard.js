@@ -1,16 +1,25 @@
 import axios from "axios";
 import styled from "styled-components";
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import UserContext from "../contexts/UserContext";
-
+import Loader from "react-loader-spinner";
 import { ReactComponent as Checkmark } from "./../assets/check.svg";
 
 export default function TodayHabitCard({ habit, getTodayHabits }) {
     const { currentSequence, done, highestSequence, id, name } = habit;
     const isMax = highestSequence > 0 && currentSequence === highestSequence;
     const { user } = useContext(UserContext);
+    const [isLoading, setIsLoading] = useState(false);
+    useEffect(() => {
+        setIsLoading(false);
+    }, [habit.done]);
 
     function toggleCheck(id, isChecked) {
+        if (isLoading) {
+            console.log("bye");
+            return;
+        }
+        setIsLoading(true);
         const un = isChecked ? "un" : "";
         const config = {
             headers: {
@@ -25,11 +34,12 @@ export default function TodayHabitCard({ habit, getTodayHabits }) {
         toggleCheckRequest.then(() => {
             getTodayHabits();
         });
-        toggleCheckRequest.catch((error) => console.log(error.response.data));
+        toggleCheckRequest.catch(() => {
+            alert("Algo deu errado, tente novamente.");
+        });
     }
-    console.log(done);
     return (
-        <Card>
+        <Card onClick={() => toggleCheck(id, done)}>
             <div className="left">
                 <p className="title"> {name}</p>
                 <p>
@@ -48,8 +58,17 @@ export default function TodayHabitCard({ habit, getTodayHabits }) {
                 </p>
             </div>
             <div className="right">
-                <CheckButton onClick={() => toggleCheck(id, done)} done={done}>
-                    <Checkmark />
+                <CheckButton isLoading={isLoading} done={done}>
+                    {isLoading ? (
+                        <Loader
+                            type="ThreeDots"
+                            color="#FFFFFF"
+                            width={43}
+                            height={11}
+                        />
+                    ) : (
+                        <Checkmark />
+                    )}
                 </CheckButton>
             </div>
         </Card>
@@ -85,7 +104,11 @@ const CheckButton = styled.button`
     width: 69px;
     height: 69px;
     background: ${(props) =>
-        props.done ? props.theme.doneColor : props.theme.notDoneColor};
+        props.isLoading
+            ? props.theme.lightAccentColor
+            : props.done
+            ? props.theme.doneColor
+            : props.theme.notDoneColor};
     border-radius: 5px;
     color: ${(props) => props.theme.cardBgColor};
     border: none;
