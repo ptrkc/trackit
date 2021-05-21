@@ -20,6 +20,10 @@ export default function App() {
         habit: "",
         selectedDays: [],
     });
+    const [habits, setHabits] = useState([]);
+    const [todayHabits, setTodayHabits] = useState([]);
+    const [habitHistory, setHabitHistory] = useState([]);
+
     return (
         <UserContext.Provider
             value={{
@@ -29,6 +33,12 @@ export default function App() {
                 setPercentage,
                 newHabitInfo,
                 setNewHabitInfo,
+                habits,
+                setHabits,
+                todayHabits,
+                setTodayHabits,
+                habitHistory,
+                setHabitHistory,
             }}
         >
             <ThemeProvider theme={defaultTheme}>

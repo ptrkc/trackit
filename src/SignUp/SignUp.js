@@ -148,7 +148,6 @@ const SignUpStyleForm = styled.form`
     }
     button {
         margin-bottom: 25px;
-        cursor: pointer;
     }
     a {
         font-size: 14px;

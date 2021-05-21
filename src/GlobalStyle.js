@@ -15,6 +15,9 @@ body {
 a {
     color: ${(props) => props.theme.lightAccentColor};
 }
+button{
+    cursor: pointer;
+}
 input, button {
     font-family: inherit;
 }

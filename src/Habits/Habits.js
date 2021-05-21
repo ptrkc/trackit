@@ -9,8 +9,7 @@ import UserLogedIn from "../components/UserLogedIn";
 
 export default function Habits() {
     const [showNewHabitCard, setShowNewHabitCard] = useState(false);
-    const [habits, setHabits] = useState([]);
-    const { user } = useContext(UserContext);
+    const { user, habits, setHabits } = useContext(UserContext);
 
     UserLogedIn();
 
@@ -86,7 +85,6 @@ const StyledDiv = styled.div`
             width: 40px;
             height: 35px;
             font-size: 27px;
-            margin-top: 15px;
             display: flex;
             align-items: center;
             justify-content: center;

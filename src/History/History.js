@@ -11,10 +11,9 @@ import HistoryHabitCard from "./HistoryHabitCard";
 
 export default function History() {
     const today = dayjs().format("DD/MM/YYYY");
-    const { user } = useContext(UserContext);
+    const { user, habitHistory, setHabitHistory } = useContext(UserContext);
     const [value, onChange] = useState(new Date());
     const [selectedDayHabits, setSelectedDayHabits] = useState([]);
-    const [habitHistory, setHabitHistory] = useState([]);
     const [allDoneDays, setAllDoneDays] = useState([]);
     const [notAllDoneDays, setNotAllDoneDays] = useState([]);
 
@@ -23,6 +22,12 @@ export default function History() {
     useEffect(() => {
         if (user) {
             getHabitHistory();
+        }
+        if (habitHistory.length > 0) {
+            sortHabitsDoneDay(habitHistory);
+            setSelectedDayHabits(
+                habitHistory.find((h) => h.day === today).habits
+            );
         }
     }, [user]);
 

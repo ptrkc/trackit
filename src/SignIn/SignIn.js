@@ -123,7 +123,6 @@ const SignInStyle = styled.div`
     }
     button {
         margin-bottom: 25px;
-        cursor: pointer;
     }
     a {
         font-size: 14px;

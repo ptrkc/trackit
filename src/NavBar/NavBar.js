@@ -57,6 +57,7 @@ const FixedNavBar = styled.div`
     div {
         width: 91px;
         margin-bottom: 45px;
+        cursor: pointer;
         span {
             color: ${(props) => props.theme.cardBgColor};
         }

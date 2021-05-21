@@ -8,8 +8,8 @@ import TodayHabitCard from "./TodayHabitCard";
 import UserLogedIn from "../components/UserLogedIn";
 
 export default function Habits() {
-    const [todayHabits, setTodayHabits] = useState([]);
-    const { user, percentage, setPercentage } = useContext(UserContext);
+    const { user, percentage, setPercentage, todayHabits, setTodayHabits } =
+        useContext(UserContext);
     const today = dayjs()
         .locale("pt-br")
         .format("dddd, DD/MM")
