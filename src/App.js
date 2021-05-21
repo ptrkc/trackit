@@ -12,6 +12,7 @@ import Habits from "./Habits/Habits";
 import History from "./History/History";
 import NavBar from "./NavBar/NavBar";
 import { useState } from "react";
+import GetDataArrays from "./components/GetDataArrays";
 
 export default function App() {
     const [user, setUser] = useState("");
@@ -46,6 +47,7 @@ export default function App() {
                     <ResetCSS />
                     <GlobalStyle user={user} />
                     <Header />
+                    <GetDataArrays />
                     <Switch>
                         <Route path="/" exact>
                             <SignIn />

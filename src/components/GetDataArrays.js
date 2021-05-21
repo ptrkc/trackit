@@ -1,41 +1,25 @@
 import axios from "axios";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import UserContext from "../contexts/UserContext";
+import UserLogedIn from "./UserLogedIn";
 
-export function GetTodayHabits() {
-    const { user, setTodayHabits, setPercentage } = useContext(UserContext);
+export default function GetDataArrays() {
+    const { user, todayHabits, setTodayHabits, setPercentage } =
+        useContext(UserContext);
     const config = {
         headers: {
             Authorization: `Bearer ${user.token}`,
         },
     };
-    const todayHabitsRequest = axios.get(
-        "https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/today",
-        config
-    );
-    todayHabitsRequest.then((response) => {
-        setTodayHabits([...response.data]);
-        const doneList = response.data.filter((h) => h.done === true);
-        const percent = Math.ceil(
-            (doneList.length / response.data.length) * 100
-        );
-        setPercentage(percent);
-    });
-    todayHabitsRequest.catch(() =>
-        alert("Erro ao carregar hábitos. Tente novamente.")
-    );
-}
 
-export function GetDataArrays() {
-    const { user } = useContext(UserContext);
+    UserLogedIn();
 
-    useEffect(() => {}, []);
-
-    const config = {
-        headers: {
-            Authorization: `Bearer ${user.token}`,
-        },
-    };
+    useEffect(() => {
+        if (user && todayHabits.length === 0) {
+            getTodayHabits();
+            console.log(todayHabits);
+        }
+    }, [user]);
 
     function getTodayHabits() {
         const todayHabitsRequest = axios.get(
@@ -55,33 +39,34 @@ export function GetDataArrays() {
         );
     }
 
-    function getHabits() {
-        const newHabitRequest = axios.get(
-            "https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits",
-            config
-        );
-        newHabitRequest.then((response) => {
-            setHabits([...response.data]);
-        });
-        newHabitRequest.catch(() =>
-            alert("Erro ao carregar hábitos. Teste novamente.")
-        );
-    }
+    // function getHabits() {
+    //     const newHabitRequest = axios.get(
+    //         "https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits",
+    //         config
+    //     );
+    //     newHabitRequest.then((response) => {
+    //         setHabits([...response.data]);
+    //     });
+    //     newHabitRequest.catch(() =>
+    //         alert("Erro ao carregar hábitos. Teste novamente.")
+    //     );
+    // }
 
-    function getHabitHistory() {
-        const historyRequest = axios.get(
-            "https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/history/daily",
-            config
-        );
-        historyRequest.then((response) => {
-            setHabitHistory(response.data);
-            sortHabitsDoneDay(response.data);
-            setSelectedDayHabits(
-                response.data.find((h) => h.day === today).habits
-            );
-        });
-        historyRequest.catch(() =>
-            alert("Erro ao carregar histórico. Tente novamente.")
-        );
-    }
+    // function getHabitHistory() {
+    //     const historyRequest = axios.get(
+    //         "https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/history/daily",
+    //         config
+    //     );
+    //     historyRequest.then((response) => {
+    //         setHabitHistory(response.data);
+    //         sortHabitsDoneDay(response.data);
+    //         setSelectedDayHabits(
+    //             response.data.find((h) => h.day === today).habits
+    //         );
+    //     });
+    //     historyRequest.catch(() =>
+    //         alert("Erro ao carregar histórico. Tente novamente.")
+    //     );
+    // }
+    return null;
 }
